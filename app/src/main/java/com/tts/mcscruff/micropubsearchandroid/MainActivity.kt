@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.beust.klaxon.*
@@ -26,9 +27,9 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
+
         //crating an arraylist to store users using the data class user
         val pubs = ArrayList<PubDetails>()
-
 
 
         //time to read from the json
@@ -38,8 +39,6 @@ class MainActivity : AppCompatActivity() {
         //creating our adapter
         val adapter = CustomAdapter(pubs)
 
-        //now adding the adapter to recyclerview
-        // recyclerView.adapter = adapter
 
         btn_Search.setOnClickListener {
             // Handler code here.
@@ -49,11 +48,11 @@ class MainActivity : AppCompatActivity() {
             val SearchText = txt_SearchBox2.editableText.toString()
             GetPubDetails(SearchText)
 
-            /////
-            //recyclerView.adapter = adapter
         }
 
-        
+        fun ChangeText1(NewText:String){
+            txt_PubName.text = NewText
+        }
     }
 
     fun parse(name: String): Any? {
@@ -100,10 +99,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-            val adapter = CustomAdapter(pubs)
+        val adapter = CustomAdapter(pubs)
 
-            //now adding the adapter to recyclerview
-            recyclerView.adapter = adapter
-        }
+        //now adding the adapter to recyclerview
+        recyclerView.adapter = adapter
 
     }
+
+
+}
+
+
+
+
