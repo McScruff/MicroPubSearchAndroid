@@ -113,6 +113,7 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("PubAddress",pubDetails.PubAddress)
                 startActivity(intent)
 
+                //activity should have started
 
             }
         })
