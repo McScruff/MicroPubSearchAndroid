@@ -1,5 +1,6 @@
 package com.tts.mcscruff.micropubsearchandroid
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import kotlinx.android.synthetic.main.activity_popup.*
 
 
 //import com.tts.mcscruff.micropubsearchandroid.klaxon.*
@@ -37,8 +39,11 @@ class MainActivity : AppCompatActivity() {
         val obj = parse("/assets/MicroPubs.json") as JsonArray<JsonObject>
 
         //creating our adapter
-        val adapter = CustomAdapter(pubs)
-
+        val adapter = CustomAdapter(pubs, object: CustomAdapter.ItemClickListener {
+            override fun onClick(view: View, pubDetails: PubDetails) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
 
         btn_Search.setOnClickListener {
             // Handler code here.
@@ -50,9 +55,8 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        fun ChangeText1(NewText:String){
-            txt_PubName.text = NewText
-        }
+
+
     }
 
     fun parse(name: String): Any? {
@@ -62,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             return Parser().parse(inputStream)
         }
     }
+
 
 
     fun GetPubDetails(Name: String) {
@@ -99,11 +104,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val adapter = CustomAdapter(pubs)
+        val adapter = CustomAdapter(pubs, object: CustomAdapter.ItemClickListener{
+            override fun onClick(view: View, pubDetails: PubDetails) {
+                println("on main $pubDetails")
+                val PubInfo = pubDetails
+                val intent = Intent(Intent(this@MainActivity,activity_popup::class.java))
+                intent.putExtra("PubName",pubDetails.PubName)
+                intent.putExtra("PubAddress",pubDetails.PubAddress)
+                startActivity(intent)
+
+
+            }
+        })
 
         //now adding the adapter to recyclerview
         recyclerView.adapter = adapter
-
     }
 
 
